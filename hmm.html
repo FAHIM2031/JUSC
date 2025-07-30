@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Club</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="notice.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+      <img src="Images/logo.jpeg" alt="Logo">
+      Jahangirnagar University Science Club
+    </div>
+
+    <div class="mobile-menu" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="notice&events.html">Notice & Event</a></li>
+
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle">Department ▼</a>
+        <ul class="dropdown-menu">
+          <li><a href="promotion.html">Promotion</a></li>
+          <li><a href="publication.html">Publication</a></li>
+          <li><a href="public_affairs.html">Public Affairs</a></li>
+          <li><a href="scientific_research.html">Scientific Research</a></li>
+          <li><a href="project.html">Project</a></li>
+          <li><a href="it.html">IT</a></li>
+          <li><a href="research_development.html">Research & Development</a></li>
+          <li><a href="hrm.html">Human Resourse & Management</a></li>
+          <li><a href="social_activity.html">Social Activities</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle">About Us ▼</a>
+        <ul class="dropdown-menu">
+          <li><a href="Executive_body.html">Executive Body</a></li>
+          <li><a href="advisory_body.html">Advisory Body</a></li>
+          <li><a href="Former_committee.html">Former Committee</a></li>
+        </ul>
+      </li>
+
+    <li><a href="gallery.html">Gallery</a></li>
+  <li><a href="publications.html">Publication</a></li>
+  <li><a href="blog.html">Blog</a></li>
+  <li><a href="seminer.html">Seminar</a></li>
+  <li><a href="alumni.html">Alumni</a></li>
+  <li><a href="developers.html">Developer</a></li>
+  </ul>
+  </header>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
+
+      dropdownToggles.forEach(toggle => {
+        toggle.addEventListener("click", function (e) {
+          if (window.innerWidth <= 768) {
+            e.preventDefault();
+            const parent = this.parentElement;
+            parent.classList.toggle("open");
+
+            // Close other dropdowns
+            document.querySelectorAll(".dropdown").forEach(drop => {
+              if (drop !== parent) drop.classList.remove("open");
+            });
+          }
+        });
+      });
+
+      // Close dropdowns if clicking outside
+      document.addEventListener("click", function (e) {
+        if (!e.target.closest(".dropdown")) {
+          document.querySelectorAll(".dropdown").forEach(drop => {
+            drop.classList.remove("open");
+          });
+        }
+      });
+    });
+  </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggles = document.querySelectorAll(".dropdown-toggle");
+
+      toggles.forEach(toggle => {
+        toggle.addEventListener("click", function (e) {
+          if (window.innerWidth <= 768) {
+            e.preventDefault();
+            const parent = this.parentElement;
+
+            parent.classList.toggle("open");
+
+            document.querySelectorAll(".dropdown").forEach(item => {
+              if (item !== parent) item.classList.remove("open");
+            });
+          }
+        });
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!e.target.closest(".dropdown")) {
+          document.querySelectorAll(".dropdown").forEach(item => item.classList.remove("open"));
+        }
+      });
+    });
+  </script>
+
+<!---------------------------------------- Notice Board Section ----------------------------->
+<section class="notice-section">
+  <div class="notice-container">
+    <div class="icon">📣</div>
+    <div class="notice-text">
+      Notice : Welcome to Jahangirnagar University Science Club
+    </div>
+  </div>
+</section>
+
+<!--------------------------------------------Introduction--------------------------------->
+<section class="intro">
+  <div class="intro-text">
+    <h2 style="font-size: 40px;">Welcome to JUSC</h2>
+    <p>Jahangirnagar University Science Club (JUSC) is a pioneering student-run organization founded with a vision to foster scientific knowledge, critical thinking, and innovation across campus and beyond. Established on August 17, 2005, JUSC is the first and most prominent science-based club at Jahangirnagar University, built on the principles of curiosity, creativity, and community service.</p>
+    <br/>
+    <p>One of our landmark initiatives, the Jahangirnagar Science Olympiad, has grown into a national platform that encourages young talents to showcase their knowledge and compete with enthusiasm. It not only tests academic excellence but also creates a space for critical dialogue, innovation, and networking among budding scientists.</p>
+    <br/>
+    <p>JUSC is more than just a club—it’s a movement. A place where ideas are tested, collaborations are born, and future scientists, thinkers, and changemakers take their first steps. Whether you're passionate about biology, physics, computing, social sciences, or engineering, JUSC welcomes you to become a part of this dynamic and inclusive community.</p>
+    <br/>
+    <p>At JUSC, we believe in nurturing leadership through science. From mentoring school students to collaborating with national and international science communities, our impact goes beyond campus boundaries. Join us as we continue to explore, discover, and inspire the next generation of scientific minds.</p>
+    <br/>
+    <p>With a spirit rooted in green—the color of life, growth, and the identity of Jahangirnagar University—JUSC symbolizes a commitment to sustainable development, intellectual flourishing, and scientific integrity. It is a home for dreamers, doers, and changemakers who want to leave a lasting impact on society through the power of science.</p>
+  </div>
+  <div class="intro-media">
+    <img id="slideshow" src="Images/frame1.jpg" alt="Intro Image" />
+
+    <p><h2>Mission:</h2>Our mission is to ignite scientific enthusiasm among students by bridging theoretical knowledge with real-world applications. Through a diverse array of events—such as science festivals, workshops, seminars, field trips, exhibitions, inter-university competitions, and outreach programs—JUSC has been consistently promoting a culture of exploration and lifelong learning.</p>
+
+    <br/>
+
+    <iframe
+      src="https://www.youtube.com/embed/OhQRr11ZBfE"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+
+    <p><h2>Vision:</h2>We operate under a multidisciplinary structure, incorporating departments like Scientific Research, Content Writing, IT Crew, Public Relations, Social Activities, Graphics Design, Video Editing, and International Affairs. This allows students from any background to contribute to scientific communication, innovation, and leadership development.</p>
+  </div>
+</section>
+<br/>
+
+
+
+<!-------------------------------------Leader------------------------------------>
+<section class="leader-section">
+  <h2>Our Leaders</h2>
+
+  <div class="leader-box president">
+    <div class="leader-image">
+      <img src="Images/president.jpeg" alt="President">
+    </div>
+    <div class="leader-info">
+      <h3>President - [Md. Sowrov]</h3>
+      <p><strong>Introduction:</strong> Md. Sowrov [48-batch] is the current President of JUSC. With a passion for scientific growth and years of leadership experience, he continues to inspire and guide the team towards innovation and excellence.</p>
+      <p><strong>Message from the President:</strong> “Science has the power to transform society. At JUSC, we aim to build a generation that dares to question, explore, and evolve. Let curiosity lead the way.”</p>
+    </div>
+  </div>
+
+  <div class="leader-box secretary">
+    <div class="leader-info">
+      <h3>Secretary - [Musa B H]</h3>
+      <p><strong>Introduction:</strong> Musa B H [49-batch], the General Secretary of JUSC, is known for [his/her/their] excellent organizational skills and enthusiasm for youth engagement in science outreach and education.</p>
+      <p><strong>Message from the Secretary:</strong> “JUSC is more than a club—it's a family of thinkers and doers. Let’s continue to spread the light of science across every corner of the campus and beyond.”</p>
+    </div>
+    <div class="leader-image">
+      <img src="Images/secretary.jpeg" alt="Secretary">
+    </div>
+  </div>
+</section>
+
+
+
+<!-------------------------------------Partnership--------------------------------->
+<div class="partnership-container">
+  <h1>Partnership</h1>
+
+  <div class="partnership-content">
+    <div class="partner-info">
+      <img src="Images/handshake.png" alt="Partnership Logo" />
+      <p>
+        We are proud to have an exclusive partnership with world-class clubs to foster talent and grow the game.
+      </p>
+    </div>
+
+    <div class="clubs-grid" id="clubsGrid">
+      <!-- Partner clubs inserted here by JS -->
+    </div>
+    <br/>
+  </div>
+  <br/>
+  <br/>
+</div>
+
+<!--------------------------Maps----------------------->
+<h1>Location:</h1>
+<div class="map-container">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.902837222364!2d90.3974604153853!3d23.75120218458843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b853f175c91f%3A0xd8777f6b58d2a8e1!2sTSC%20Ln!5e0!3m2!1sen!2sbd!4v1616408999999!5m2!1sen!2sbd"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</div>
+
+<!----------------------------Footer----------------------->
+<footer class="footer">
+  <div class="contact">
+    <h3>Contact Us</h3>
+    <p>Email: info@jusc.edu.bd</p>
+    <p>Phone: +880123456789</p>
+    <p>Address: Jahangirnagar University, Savar, Dhaka</p>
+  </div>
+
+  <div class="links">
+    <h3>Follow Us</h3>
+    <div class="social-icons">
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<!----------header script----------->
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+  }
+</script>
+<script>
+  function adjustBodyPadding() {
+    const header = document.querySelector('header');
+    const body = document.body;
+    body.style.paddingTop = header.offsetHeight + 'px';
+  }
+
+  // Run on load and resize
+  window.addEventListener('DOMContentLoaded', adjustBodyPadding);
+  window.addEventListener('resize', adjustBodyPadding);
+</script>
+
+
+<!----------partnership script---------->
+<script>
+  const partnerClubs = [
+    { name: "National Museum of Science & Technology, Bangladesh ", logo: "Images/jatio_biggan.png" },
+    { name: "Rajshashi University Science Club", logo: "Images/rusc.jpg" },
+    { name: "Comilla University Science Club", logo: "Images/cusc.jpg" },
+    
+  ];
+
+  const clubsGrid = document.getElementById('clubsGrid');
+
+  partnerClubs.forEach(club => {
+    const div = document.createElement('div');
+    div.classList.add('club-item');
+
+    const img = document.createElement('img');
+    img.classList.add('club-logo');
+    img.src = club.logo;
+    img.alt = club.name + " logo";
+
+    const name = document.createElement('div');
+    name.classList.add('club-name');
+    name.textContent = club.name;
+
+    div.appendChild(img);
+    div.appendChild(name);
+    clubsGrid.appendChild(div);
+  });
+</script>
+
+<!---------------intro-image script------------->
+<script>
+  const images = [
+    "Images/frame1.jpg",
+    "Images/frame2.jpg",
+    "Images/frame3.jpg",
+    "Images/frame4.png",
+    "Images/frame5.png"
+  ];
+
+  let index = 0;
+  const slideshow = document.getElementById("slideshow");
+
+  setInterval(() => {
+    index = (index + 1) % images.length;
+    slideshow.src = images[index];
+  }, 1000); // change every seconds
+</script>
+<script>
+  // Toggle dropdowns on mobile click
+  document.addEventListener("DOMContentLoaded", function () {
+    const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
+
+    dropdownToggles.forEach(toggle => {
+      toggle.addEventListener("click", function (e) {
+        // Only prevent default and toggle on mobile
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+          const parent = this.parentElement;
+          parent.classList.toggle("open");
+
+          // Close other dropdowns
+          document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== parent) item.classList.remove("open");
+          });
+        }
+      });
+    });
+
+    // Optional: close dropdowns if clicking outside
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(".dropdown")) {
+        document.querySelectorAll(".dropdown").forEach(item => {
+          item.classList.remove("open");
+        });
+      }
+    });
+  });
+</script>
+
+
+
+
+
+</body>
+</html>

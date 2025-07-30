@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Club Notice & Sliding Event Preview</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+  min-height: 20vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fafafa;
+      color: #222;
+    }
+
+    .main {
+      flex: 1;
+      padding: 20px;
+      padding-top: 80px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #2e7d32;
+      color: white;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      gap: 10px;
+    }
+
+    .logo img {
+      height: 60px;
+      background-color: white;
+      padding: 8px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links li {
+      position: relative;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 10px;
+      display: block;
+      transition: background-color 0.3s ease;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      background-color: #388e3c;
+      padding: 10px;
+      list-style: none;
+      min-width: 160px;
+      z-index: 10;
+      border-radius: 5px;
+    }
+
+    .dropdown-menu li a {
+      padding: 8px 12px;
+      color: white;
+      display: block;
+    }
+
+    .dropdown-menu li a:hover {
+      background-color: #2e7d32;
+      border-radius: 4px;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .mobile-menu .line {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      border-radius: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #2e7d32;
+        padding: 10px 0;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .dropdown-menu {
+        position: static;
+        background-color: #388e3c;
+        border-radius: 0;
+      }
+
+      .mobile-menu {
+        display: flex;
+        margin-top: 10px;
+      }
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #1b5e20;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto 50px auto;
+    }
+
+    .notice-board {
+      background: white;
+      padding: 20px 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgb(0 0 0 / 0.05);
+    }
+
+    .notice-board h2 {
+      font-weight: 600;
+      margin-bottom: 15px;
+      border-left: 5px solid #3498db;
+      padding-left: 10px;
+      color: #3498db;
+    }
+
+    .notice-item {
+      font-size: 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .notice-item:last-child {
+      border-bottom: none;
+    }
+
+    .notice-item::before {
+      content: "📢";
+      margin-right: 8px;
+      font-size: 18px;
+    }
+
+    .events-container h2 {
+      font-weight: 600;
+      margin-bottom: 20px;
+      border-left: 5px solid #27ae60;
+      padding-left: 10px;
+      color: #27ae60;
+    }
+
+    .event-previews {
+      display: flex;
+      gap: 25px;
+      overflow-x: auto;
+      padding: 15px;
+      scrollbar-width: thin;
+      scrollbar-color: #27ae60 #f0f0f0;
+      margin-bottom: 30px;
+    }
+
+    .event-previews::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .event-previews::-webkit-scrollbar-thumb {
+      background-color: #27ae60;
+      border-radius: 4px;
+    }
+
+    .event-previews::-webkit-scrollbar-track {
+      background: #f0f0f0;
+    }
+
+    .event-preview {
+      flex: 0 0 auto;
+      width: 200px;
+      background: #eaf7ea;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+      transition: all 0.3s ease;
+      padding: 13px 19px;
+    }
+
+    .event-preview:hover {
+      background-color: #d4f0d4;
+      transform: scale(1.05);
+    }
+
+    .event-preview.active {
+      border: 3px solid #27ae60;
+      background-color: #c3ecc3;
+      transform: scale(1.1);
+    }
+
+    .event-name {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 6px;
+      color: #2c662c;
+    }
+
+    .event-date,
+    .event-deadline {
+      font-size: 14px;
+      color: #3b6f3b;
+    }
+
+    .event-date {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .event-details {
+      background: white;
+      padding: 20px 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.07);
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .event-details img {
+      max-width: 400px;
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 0.1);
+    }
+
+    .event-info {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .event-info h3 {
+      color: #27ae60;
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .event-info p {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #444;
+    }
+
+    @media (max-width: 600px) {
+      .event-details {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .event-preview {
+        width: 150px;
+      }
+    }
+
+    .footer {
+  background-color: #1b5e20;
+  color: white;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 40px 60px;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  bottom: 0;
+}
+
+
+    .footer .contact,
+    .footer .links {
+      flex: 0 1 350px;
+      max-width: 350px;
+    }
+
+    .footer h3 {
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    .footer p {
+      margin: 8px 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .social-icons a {
+      color: white;
+      font-size: 24px;
+      transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #a5d6a7;
+      transform: scale(1.2);
+    }
+
+    @media (max-width: 768px) {
+      .footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+      }
+
+      .social-icons {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <img src="Images/logo.jpeg" alt="Logo" />
+    <span>Jahangirnagar University Science Club</span>
+  </div>
+  <div class="mobile-menu" onclick="toggleMenu()">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Notice & Event</a></li>
+    <li><a href="#">Gallery</a></li>
+    <li><a href="#">Publication</a></li>
+    <li><a href="#">Blog</a></li>
+    <li class="dropdown">
+      <a href="#">Department ▼</a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Content Writing</a></li>
+        <li><a href="#">IT Crew</a></li>
+        <li><a href="#">HR & Management</a></li>
+        <!-- ... -->
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a href="#">More ▼</a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Seminar</a></li>
+        <li><a href="#">Alumni</a></li>
+        <li><a href="#">Developer</a></li>
+      </ul>
+    </li>
+  </ul>
+</header>
+
+<div class="main">
+  <h1>Jahangirnagar University Science Club</h1>
+
+  <section class="container notice-board">
+    <h2>Notice Board</h2>
+    <div class="notice-item">Annual Meeting: 20th July at 5 PM</div>
+    <div class="notice-item">Tech Fest Registration: Now Open</div>
+    <div class="notice-item">Welcome Event: 10th July</div>
+    <div class="notice-item">Lab Maintenance: Lab 3 closed on 7th July</div>
+  </section>
+
+  <section class="container events-container">
+    <h2>Upcoming Events</h2>
+    <div class="event-previews" id="eventPreviews"></div>
+    <div class="event-details" id="eventDetails">
+      <img src="" alt="" id="eventImage" />
+      <div class="event-info">
+        <h3 id="eventTitle"></h3>
+        <p id="eventDesc"></p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="contact">
+    <h3>Contact Us</h3>
+    <p>Email: info@jusc.edu.bd</p>
+    <p>Phone: +880123456789</p>
+    <p>Address: Jahangirnagar University, Savar, Dhaka</p>
+  </div>
+  <div class="links">
+    <h3>Follow Us</h3>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("active");
+  }
+
+  const events = [
+    {
+      title: "Science Carnival 2025",
+      date: "25th July 2025",
+      deadline: "20th July 2025",
+      imgLarge: "pres.jpg",
+      desc: "Join our grand annual Science Carnival on 25th July with exhibitions, competitions, and tech talks."
+    },
+    {
+      title: "Astronomy Night",
+      date: "30th July 2025",
+      deadline: "25th July 2025",
+      imgLarge: "https://source.unsplash.com/800x400/?astronomy,stars",
+      desc: "A magical night under the stars with telescopes, stargazing, and expert sessions on 30th July."
+    }
+  ];
+
+  const previewsContainer = document.getElementById('eventPreviews');
+  const eventImage = document.getElementById('eventImage');
+  const eventTitle = document.getElementById('eventTitle');
+  const eventDesc = document.getElementById('eventDesc');
+
+  function showEvent(id) {
+    const event = events[id];
+    eventImage.src = event.imgLarge;
+    eventImage.alt = event.title;
+    eventTitle.textContent = event.title;
+    eventDesc.textContent = event.desc;
+  }
+
+  events.forEach((event, i) => {
+    const preview = document.createElement('div');
+    preview.classList.add('event-preview');
+    if (i === 0) preview.classList.add('active');
+    preview.setAttribute('data-id', i);
+    preview.innerHTML = `
+      <div class="event-name">${event.title}</div>
+      <div class="event-date">Date: ${event.date}</div>
+      <div class="event-deadline">Deadline: ${event.deadline}</div>
+    `;
+    previewsContainer.appendChild(preview);
+  });
+
+  previewsContainer.addEventListener('click', e => {
+    const preview = e.target.closest('.event-preview');
+    if (!preview) return;
+    document.querySelectorAll('.event-preview').forEach(p => p.classList.remove('active'));
+    preview.classList.add('active');
+    showEvent(preview.getAttribute('data-id'));
+  });
+
+  showEvent(0);
+</script>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+  }
+</script>
+<script>
+  function adjustBodyPadding() {
+    const header = document.querySelector('header');
+    const body = document.body;
+    body.style.paddingTop = header.offsetHeight + 'px';
+  }
+
+  // Run on load and resize
+  window.addEventListener('DOMContentLoaded', adjustBodyPadding);
+  window.addEventListener('resize', adjustBodyPadding);
+</script>
+</body>
+</html>
